@@ -1,0 +1,33 @@
+{% extends 'post/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div>
+    <h1>Search your delivery</h1>
+    <input type="text" id="orderId" onkeyup="myFunction()" placeholder="Type your order id...">
+    <a id="order-link" href="{% url 'order_detail' %}">Search</a>
+    {% if order %}
+    <div>
+        <h1>Order Details</h1>
+        <p>First Name: {{ order.first_name }}</p>
+        <p>Last Name: {{ order.second_name }}</p>
+        <p>Father: {{ order.father }}</p>
+        <p>Phone: {{ order.phone }}</p>
+        <p>Email: {{ order.email }}</p>
+        <p>From: {{ order.filial_send }}</p>
+        <p>To: {{ order.filial_receive }}</p>
+        <p>Status: {{ order.status }}</p>
+    </div>
+    {% endif %}
+</div>
+<script>
+	function geturl() {
+		var order = $("#orderId").val();
+		$("#order-link").attr("href", "{% url 'order_detail' %}?orderid=" + order);
+	}
+	geturl();
+	$("#orderId").change(function() {
+		geturl();
+	});
+</script>
+{% endblock %}
